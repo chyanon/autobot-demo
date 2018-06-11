@@ -7,24 +7,21 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.post('/webhook', (req, res) => {
     let reply_token = req.body.events[0].replyToken
-    reply(reply_token)
+    let msg = req.body.events[0].message.text
+    reply(reply_token, msg)
     res.sendStatus(200)
 })
 app.listen(port)
-function reply(reply_token) {
+function reply(reply_token, msg) {
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer {/I/DVpOQ/ZP1aBVF1YcRbqjA9dLnY77CcFifMSc+oRd0cQLXkR8wwMIeN4Nn6KsQzyo3dpHTp0Rqh/oofQic74RqBgoUhS53oYr3f+bXcXnygU22LUvfjlhgV5AgpjNBDNbmZ+S5MJNHN2RNJvpJbgdB04t89/1O/w1cDnyilFU=}'
+        'Authorization': 'Bearer {xxxxxxx}'
     }
     let body = JSON.stringify({
         replyToken: reply_token,
         messages: [{
             type: 'text',
-            text: 'Hello'
-        },
-        {
-            type: 'text',
-            text: 'How are you?'
+            text: msg
         }]
     })
     request.post({
